@@ -13,18 +13,19 @@ rainAud = rainAud_res;
 outline;
 outlineLength;
 timeDisplay;
+loaded = false;
 
-connectedCallback(){
-    
-}
-renderedCallback(){
+renderedCallback(){    
+    if(!this.loaded){
     this.outline = this.template.querySelector(".moving-outline circle");
     this.outlineLength = this.outline.getTotalLength();
     this.outline.style.strokeDasharray = this.outlineLength;
-    //this.outline.style.strokeDashoffset  = this.outlineLength;
+    this.outline.style.strokeDashoffset  = this.outlineLength;
+    this.time = `${Math.floor(this.fakeDuration / 60)}:${Math.floor(this.fakeDuration % 60 )}`;
+    }   
     this.audio = this.template.querySelector(".song");
     this.rainVid = this.template.querySelector('.video');
-    this.time = `${Math.floor(this.fakeDuration / 60)}:${Math.floor(this.fakeDuration % 60 )}`;
+    this.loaded = true;
 }
 
 handleClick(event){
