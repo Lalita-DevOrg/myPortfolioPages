@@ -7,9 +7,9 @@ import beachAud_res from '@salesforce/resourceUrl/beachAudio';
 export default class MeditationApp extends LightningElement {
     rainVideo = vid_res;
     isPlay= true;
-    time = '0.00';
-    rainAud = rainAud_res;
     fakeDuration= 600;
+    time = 0.00;
+    rainAud = rainAud_res;
     outline;
     outlineLength;
     timeDisplay;
@@ -18,8 +18,10 @@ export default class MeditationApp extends LightningElement {
         this.outline = this.template.querySelector(".moving-outline circle");
         this.outlineLength = this.outline.getTotalLength();
         this.outline.style.strokeDasharray = this.outlineLength;
+        this.outline.style.strokeDashoffset  = this.outlineLength;
         this.audio = this.template.querySelector(".song");
         this.rainVid = this.template.querySelector('.video');
+        this.time = `${Math.floor(this.fakeDuration / 60)}:${Math.floor(this.fakeDuration % 60 )}`;
     }
 
     handleClick(event){
@@ -34,15 +36,17 @@ export default class MeditationApp extends LightningElement {
             this.isPlay= true;
         }else if(value === '120' || value == '300' || value == '600'){
             this.fakeDuration = value;
-            this.time = `${Math.floor(fakeDuration / 60)}:${Math.floor(fakeDuration % 60)}`;
+            this.time = `${Math.floor(this.fakeDuration / 60)}:${Math.floor(this.fakeDuration % 60)}`;
         }else if(value === 'beach'){
             this.rainVid.src = vid_res1;
             this.audio.src = beachAud_res;
+            this.isPlay = true;
             checkPlaying(this.audio);
         }else if(value === 'rain'){
             this.rainVid.src = vid_res;
             this.audio.src = rainAud_res;
-            checkPlaying(this.audio);
+            this.isPlay = true;
+            checkPlaying(this.audio);         
         }
 
         
@@ -65,16 +69,9 @@ export default class MeditationApp extends LightningElement {
     }
     }
 
-    checkPlaying(song){
-        if(song.paused){
-            this.rainVid.play();
-            this.audio.play();
-            this.isPlay = false;
-        }else{
-            this.rainVid.pause();
-            this.audio.pause();
-            this.isPlay = true;
-        }
-
+    checkPlaying(song){        
+        this.rainVid.pause();
+        this.audio.pause();
+        this.loaded = false;
     }
 }
