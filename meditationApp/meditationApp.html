@@ -1,34 +1,106 @@
 <template>
+  <template if:true={isSpinner}>
+    <lightning-spinner
+      alternative-text="Loading"
+      size="large"
+    ></lightning-spinner>
+  </template>
+
   <div class="app">
-      <div class="vid-container">
-          <Video loop="loop" class="video">
-            <source src={rainVideo} type="video/mp4" />           
-          </video>
-          </div>
-      <div class="time-select">
-          <lightning-button label="2 Mintues"  title ="2 Mintues" value='120' onclick={handleClick}></lightning-button>
-          <lightning-button label="5 Mintues" value='300' title ="5 Mintues" onclick={handleClick}></lightning-button>
-          <lightning-button label="10 Mintues" value='600' title ="10 Mintues" onclick={handleClick}></lightning-button>
-      </div>
-      <div class="player-container">
-          <audio class="song" src={rainAud} ontimeupdate={updateTime}></audio>
-          <template if:true={isPlay}>
-            <lightning-button variant="brand" icon-name="utility:play" value='Play' title="Play" onclick={handleClick}></lightning-button>
-          </template>
-          <template if:false={isPlay}>
-            <lightning-button variant="brand" icon-name="utility:pause" value='Pause' title="Pause" onclick={handleClick}></lightning-button>
-          </template>
-            <svg class="track-outline" width="453" height="453" viewBox="0 0 453 453" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="226.5" cy="226.5" r="216.5" stroke="white" stroke-width="20"/>
-              </svg>
-            <svg class="moving-outline" width="453" height="453" viewBox="0 0 453 453" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="226.5" cy="226.5" r="216.5" stroke="#018EBA" stroke-width="20"/>
-              </svg>               
-              <h3 class="time-display">{time}</h3>  
-      </div>
-      <div class="sound-picker">
-      <lightning-button  value='beach' icon-name="custom:custom10" title="Beach" onclick={handleClick}></lightning-button>
-      <lightning-button icon-name="custom:custom60" value='rain' onclick={handleClick} title="Rain"></lightning-button>
-      </div>      
+    <div class="vid-container">
+      <Video loop="loop" class="video" oncanplay={loadVideo}>
+        <source src={rainVideo} type="video/mp4" />
+      </Video>
+    </div>
+    <div class="time-select">
+      <lightning-button
+        label="2 Mintues"
+        title="2 Mintues"
+        value="120"
+        onclick={handleClick}
+      ></lightning-button>
+      <lightning-button
+        label="5 Mintues"
+        value="300"
+        title="5 Mintues"
+        onclick={handleClick}
+      ></lightning-button>
+      <lightning-button
+        label="10 Mintues"
+        value="600"
+        title="10 Mintues"
+        onclick={handleClick}
+      ></lightning-button>
+    </div>
+    <div class="player-container">
+      <audio class="song" src={rainAud} ontimeupdate={updateTime}></audio>
+      <template if:true={isPlay}>
+        <lightning-button
+          variant="brand"
+          icon-name="utility:play"
+          value="Play"
+          title="Play"
+          onclick={handleClick}
+        ></lightning-button>
+      </template>
+      <template if:false={isPlay}>
+        <lightning-button
+          variant="brand"
+          icon-name="utility:pause"
+          value="Pause"
+          title="Pause"
+          onclick={handleClick}
+        ></lightning-button>
+      </template>
+      <svg
+        class="track-outline"
+        width="453"
+        height="453"
+        viewBox="0 0 453 453"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="226.5"
+          cy="226.5"
+          r="216.5"
+          stroke="white"
+          stroke-width="20"
+        />
+      </svg>
+      <svg
+        class="moving-outline"
+        width="453"
+        height="453"
+        viewBox="0 0 453 453"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="226.5"
+          cy="226.5"
+          r="216.5"
+          stroke="#018EBA"
+          stroke-width="20"
+        />
+      </svg>
+      <h3 class="time-display">{time}</h3>
+    </div>
+    <div class="sound-picker">
+      <lightning-button
+        value="beach"
+        icon-name="custom:custom10"
+        title="Beach"
+        label="Beach"
+        onclick={handleClick}
+      ></lightning-button>
+      <lightning-button
+        label="Rain"
+        icon-name="custom:custom60"
+        value="rain"
+        onclick={handleClick}
+        title="Rain"
+      ></lightning-button>
+    </div>
   </div>
 </template>
