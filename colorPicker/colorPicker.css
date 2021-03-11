@@ -1,0 +1,6 @@
+:host {
+  --my-text-bg-colour: black;
+}
+.colorMeClass {
+  background-color: var(--my-text-bg-colour);
+}
